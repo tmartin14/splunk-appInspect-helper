@@ -26,7 +26,7 @@ echo Lets get your TOKEN from Splunkbase...
 TOKEN=`curl -s -X GET -u "$SPLUNKBASE_USER" --url "https://api.splunk.com/2.0/rest/login/splunk" | jq -r '.data.token' `
 
 # 2.  submit an application for validation
-echo Submitting App Validation request...
+echo Submitting AppInspect request...
 REQUEST_ID_VALIDATION=`curl -s -X POST \
      -H "Authorization: bearer $TOKEN" \
      -H "Cache-Control: no-cache" \
@@ -86,19 +86,19 @@ curl -s -X GET \
      -H "Authorization: bearer $TOKEN" \
          -H "Cache-Control: no-cache" \
          -H "Content-Type: text/html" \
-         --url "https://appinspect.splunk.com/v1/app/report/$REQUEST_ID_VALIDATION" > report_validation.html
+         --url "https://appinspect.splunk.com/v1/app/report/$REQUEST_ID_VALIDATION" > report1_appInspect.html
 
 curl -s -X GET \
      -H "Authorization: bearer $TOKEN" \
          -H "Cache-Control: no-cache" \
          -H "Content-Type: text/html" \
-         --url "https://appinspect.splunk.com/v1/app/report/$REQUEST_ID_CLOUD" > report_cloud.html
+         --url "https://appinspect.splunk.com/v1/app/report/$REQUEST_ID_CLOUD" > report2_cloud.html
 
 curl -s -X GET \
      -H "Authorization: bearer $TOKEN" \
          -H "Cache-Control: no-cache" \
          -H "Content-Type: text/html" \
-         --url "https://appinspect.splunk.com/v1/app/report/$REQUEST_ID_PYTHON3" > report_python3.html
+         --url "https://appinspect.splunk.com/v1/app/report/$REQUEST_ID_PYTHON3" > report3_python3.html
 
 echo Done.
 
