@@ -1,10 +1,12 @@
 #!/bin/bash 
 
-#APP_FILE_PATH=/Users/tomm/Documents/GitHub/splunk-newrelic/distributions/Splunk_TA_New_Relic-2.2.0.tar.gz 
+# Create your packaged app file
+# COPYFILE_DISABLE=1 tar -cvzf <appname>.tar.gz <appname_directory>
+
 
 # Did the user specify the file to submit?   If not , get it now
 if [ $# -eq 0 ]; then
-    read -p 'Enter the filename of the Splunk app to submit: ' APP_FILE_PATH 
+    read -p 'Enter the full path to the filename of the Splunk app to submit: ' APP_FILE_PATH 
   else
     APP_FILE_PATH="$1"
     echo "$APP_FILE_PATH"
