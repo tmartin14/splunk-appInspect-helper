@@ -1,0 +1,1 @@
+# splunk-appInspect-helper
