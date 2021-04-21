@@ -61,13 +61,13 @@ which results in the following response:
 
 ### Check the status of a submission:
 
-Once the App/Add-On has been submitted you can check the status using the status url. 
+Once the App/Add-On has been submitted you can check the status using the status url above. 
 ```
 curl -s -X GET \
          -H "Authorization: bearer <token>" \
          --url "https://appinspect.splunk.com/v1/app/validate/status/<request_id>"
 ```
-    which results in the following response:
+which results in the following response:
 ```json
 {   
     "request_id": "<request_id>", 
