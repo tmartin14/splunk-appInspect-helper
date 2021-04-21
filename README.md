@@ -4,6 +4,12 @@ This script will help in submitting Splunk Apps and Add-Ons to appInspect and fo
 
 More information on appInspect can be found on [dev.splunk.com](https://dev.splunk.com/enterprise/docs/releaseapps/appinspect/splunkappinspectapi/runappinspectrequestsapi)
 
+## How to use this script:
+```
+./submit_appInspect.sh <TA_Filename>
+```
+
+
 ## How this works:
 ### Login to Splunkbase to retreive your token for submissions: 
 
