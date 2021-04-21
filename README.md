@@ -11,7 +11,7 @@ More information on appInspect can be found on [dev.splunk.com](https://dev.splu
 curl -X GET -u <splunkbase_id> --url "https://api.splunk.com/2.0/rest/login/splunk"
 ```
 
-    which results in the following response:
+which results in the following response:
 ```json
 { 
     "status_code":200,
@@ -37,7 +37,7 @@ curl -X POST \
      -F "app_package=@\"<TA_Filename>\"" \
      --url "https://appinspect.splunk.com/v1/app/validate"
 ```
-    which results in the following response:
+which results in the following response:
 ```json
 {
     "request_id": "<request_id>",
@@ -61,7 +61,7 @@ curl -X POST \
 
 - Request the status of a submission:
 
-    Once the App/Add-On has been submitted you can check the status using the status url. 
+Once the App/Add-On has been submitted you can check the status using the status url. 
 ```
 curl -s -X GET \
          -H "Authorization: bearer <token>" \
@@ -84,13 +84,13 @@ curl -s -X GET \
 ```
 - Request the report for a submission:
 
-    Once the process is complete (`status = SUCCESS|FAILURE|FAILED`) you can retrieve the results using the report url above. 
+Once the process is complete (`status = SUCCESS|FAILURE|FAILED`) you can retrieve the results using the report url above. 
 ```
 curl -s -X GET \
          -H "Authorization: bearer <token>" \
          --url "https://appinspect.splunk.com/v1/app/report/<request_id>"
 ```
-    The report is in HTML format.
+The report is in HTML format.
 
 
 ## Additional Submissions
