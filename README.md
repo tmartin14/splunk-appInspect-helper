@@ -1,8 +1,13 @@
 # splunk-appInspect-helper
 
-This script will help in submitting Splunk Apps and Add-Ons to appInspect and for Splunk Cloud vetting.  This script will log in to Splunkbase to obtain a token that is then used to submit the App/Add-On to appInspect.  It will periodically check to see if the process has completed (once per minute) and when completed will retrieve the AppInspect results, save it into a file in the local directory and then open that file in a browser.   
+This script will help in submitting Splunk Apps and Add-Ons to appInspect for Splunk Cloud vetting.  This script will log in to Splunkbase to obtain a token that is then used to submit the App/Add-On to appInspect.  It will periodically check to see if the process has completed (once per minute) and when completed will retrieve the AppInspect results, save it into a file in the local directory and then open that file in a browser.   
 
 More information on appInspect can be found on [dev.splunk.com](https://dev.splunk.com/enterprise/docs/releaseapps/appinspect/splunkappinspectapi/runappinspectrequestsapi)
+
+To create your packaged app file from the command line use the following command:
+`COPYFILE_DISABLE=1 tar -cvzf <appname>.tgz <appname_directory>`
+
+
 
 ## How to use this script:
 ```
