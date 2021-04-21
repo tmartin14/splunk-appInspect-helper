@@ -5,7 +5,7 @@ This script will help in submitting Splunk Apps and Add-Ons to appInspect and fo
 More information on appInspect can be found on [dev.splunk.com](https://dev.splunk.com/enterprise/docs/releaseapps/appinspect/splunkappinspectapi/runappinspectrequestsapi)
 
 ## How this works:
-- To login to Splunkbase the command is: 
+### To login to Splunkbase the command is: 
 
 ```
 curl -X GET -u <splunkbase_id> --url "https://api.splunk.com/2.0/rest/login/splunk"
@@ -28,7 +28,7 @@ which results in the following response:
     }
 }
 ```
-- Submiiting an app to appInspect uses the following command:
+### Submiiting an app to appInspect uses the following command:
 
 ```
 curl -X POST \
@@ -59,7 +59,7 @@ which results in the following response:
 }
 ```
 
-- Request the status of a submission:
+### Request the status of a submission:
 
 Once the App/Add-On has been submitted you can check the status using the status url. 
 ```
@@ -82,7 +82,7 @@ curl -s -X GET \
     "status": "PROCESSING" 
 }
 ```
-- Request the report for a submission:
+### Request the report for a submission:
 
 Once the process is complete (`status = SUCCESS|FAILURE|FAILED`) you can retrieve the results using the report url above. 
 ```
