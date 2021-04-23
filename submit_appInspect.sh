@@ -51,7 +51,7 @@ main() {
      # submit the application for appInspect
      # ----------------------------------------------------
      log "Submitting AppInspect request with Splunk Cloud compliance..."
-     RESPONSE=`curl -s -X POST  --connect-timeout 20 --max-time 180 \
+     RESPONSE=`curl -s -X POST  --connect-timeout 20 --max-time 120 \
           -H "Authorization: bearer $TOKEN" \
           -H "Cache-Control: no-cache" \
           -F "app_package=@\"$APP_FILE_PATH\"" \
@@ -62,6 +62,9 @@ main() {
      if test "$RESULT" != "0"; then     
           log "ERROR: Submission failed with: $RESULT   (28 = connection timed out)"
           log "$RESPONSE"
+          if test "$RESULT" == 28; then
+              log "Please rety this submission again using ${0} $APP_FILE_PATH"
+          fi
           exit
      fi
      
@@ -73,6 +76,7 @@ main() {
      while ! check_status "$REQUEST_ID"; do
           sleep 60
      done
+     echo "$RESPONSE"
 
      # get the report results  
      get_results "$REQUEST_ID" "appInspect_results.html"
@@ -98,8 +102,16 @@ check_status(){
      RESPONSE=`curl -s -X GET \
          -H "Authorization: bearer $TOKEN" \
          --url "https://appinspect.splunk.com/v1/app/validate/status/$1" `
+     RESULT=$?
      #echo "$RESPONSE"
-     { echo "   "; date; echo "   status ="; echo "$RESPONSE" | jq -r .status; } | tr "\n" " "
+
+     if test "$RESULT" != "0"; then     
+          log "ERROR: $RESPONSE"
+          exit
+     fi
+
+      { echo "   "; date; echo "   status ="; echo "$RESPONSE" | jq -r .status; } | tr "\n" " "
+     #echo "$RESPONSE"
      echo
      return `echo $RESPONSE | jq -r .status | grep -q 'SUCCESS\|FAILURE\|FAILED' `
 }
@@ -107,7 +119,7 @@ check_status(){
 # Retrieve report results  for a submission
 # get_results(<request_id> <output_filename>) 
 get_results(){
-     echo Retrieving Report...
+     log "Retrieving Report..."
      curl -s -X GET \
           -H "Authorization: bearer $TOKEN" \
           -H "Cache-Control: no-cache" \
@@ -116,6 +128,5 @@ get_results(){
      open "$2"
 }
 
-#  call the main function to process the request(s)
+#  call the main function to process the request
 main
-
