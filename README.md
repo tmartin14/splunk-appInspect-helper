@@ -11,7 +11,7 @@ To create your packaged app file from the command line use the following command
 
 ## How to use this script:
 ```
-./submit_appInspect.sh <TA_Filename>
+./submit_appInspect.sh <TA_Filename> <Splunkbase userid>
 ```
 
 
