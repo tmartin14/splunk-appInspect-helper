@@ -18,11 +18,18 @@ fi
 if [ ! -f "$APP_FILE_PATH" ]; then
     echo "ERROR:    $APP_FILE_PATH does not exist."
     echo
-    echo "   Usage: ${0} <TA_Directory>"
+    echo "   Usage: ${0} <TA_Directory> <Splunkbase userid>"
     echo
     exit 9999 # die with error code 9999
 fi
 
+#  Did the user specify the Splunkbase login?    If not, get it now.
+if [ "$#" -eq 2 ]; then
+   SPLUNKBASE_USER="$2"
+else
+   read -p    'Enter your Splunkbase login: ' SPLUNKBASE_USER
+fi
+echo $SPLUNKBASE_USER
 
 # ----------------------------------------------------
 #                Main processing loop
@@ -32,8 +39,7 @@ main() {
      # ----------------------------------------------------
      # Login to Splunkbase & get a token
      # ----------------------------------------------------
-     read -p    'Enter your Splunkbase login: ' SPLUNKBASE_USER
-     read -s -p 'Enter your Splunkbase password: ' SPLUNKBASE_PASSWORD
+     read -s -p "Enter the Splunkbase password for $SPLUNKBASE_USER: " SPLUNKBASE_PASSWORD
      echo
      AUTH_TOKEN=$(echo -n "$SPLUNKBASE_USER:$SPLUNKBASE_PASSWORD" | base64)
 
@@ -51,12 +57,13 @@ main() {
      # ----------------------------------------------------
      # submit the application for appInspect
      # ----------------------------------------------------
-     log "Submitting AppInspect request with Splunk Cloud compliance..."
+     log "Submitting AppInspect request with Splunk Cloud compliance and JQuery tags..."
      RESPONSE=`curl -s -X POST  --connect-timeout 10 --max-time 30 \
           -H "Authorization: bearer $TOKEN" \
           -H "Cache-Control: no-cache" \
           -F "app_package=@\"$APP_FILE_PATH\"" \
           -F "included_tags=cloud" \
+          -F "included_tags=jquery" \
           --url "https://appinspect.splunk.com/v1/app/validate" `
      RESULT=$?
 
@@ -64,7 +71,7 @@ main() {
           log "ERROR: Submission failed with: $RESULT   (28 = connection timed out)"
           log "$RESPONSE"
           if test "$RESULT" == 28; then
-            log "Please rety this submission again using ${0} $APP_FILE_PATH"
+            log "Please retry this submission again using ${0} $APP_FILE_PATH"
           fi
           exit
      fi
